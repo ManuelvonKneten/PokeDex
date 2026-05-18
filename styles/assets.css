@@ -1,0 +1,29 @@
+#loadMoreBtn {
+    padding: 4px 13px;
+    font-size: 16px;
+    font-weight: 600;
+    background: linear-gradient(90deg, #ffcb05, #2a75bb);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+#loadMoreBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.25);
+}
+
+#loadMoreBtn:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+#loadMoreBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}

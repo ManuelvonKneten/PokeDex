@@ -35,18 +35,42 @@ function init() {
 
 
 //    LOAD POKEMONS
-async function loadPokemons() {
+let offset = 0;
+const limit = 20;
+let isLoading = false;
+
+async function loadPokemons(append = false) {
+    if (isLoading) return;
+    isLoading = true;
+
     try {
-        const data = await fetchJson("https://pokeapi.co/api/v2/pokemon?limit=150");
-        pokemonCache = await fetchAll(data.results.map(p => p.url));
+        const url = `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`;
+        const data = await fetchJson(url);
+
+        const newPokemons = await fetchAll(data.results.map(p => p.url));
+
+        pokemonCache = append
+            ? [...pokemonCache, ...newPokemons]
+            : newPokemons;
+
         renderCards(pokemonCache);
+
+        offset += limit;
     } catch (err) {
         console.error(err);
         cardContainer.innerHTML = createErrorHTML("Fehler beim Laden der Pokémon");
+    } finally {
+        isLoading = false;
     }
 }
 
+function loadMorePokemons() {
+    loadPokemons(true);
+}
 
+document.getElementById("loadMoreBtn")
+    .addEventListener("click", loadMorePokemons);
+    
 //    RENDER CARDS
 
 function renderCards(pokemons) {
