@@ -384,6 +384,7 @@ footer {
 
     animation: fadeIn 0.2s ease;
     height: 740px;
+    max-width: 80vh;
 }
 .dialog_menu {
     display: flex;
