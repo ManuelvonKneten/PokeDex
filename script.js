@@ -36,18 +36,23 @@ function init() {
 
 //    LOAD POKEMONS
 let offset = 0;
-const limit = 20;
+const limit = 600;
 let isLoading = false;
 
 async function loadPokemons(append = false) {
+
     if (isLoading) return;
+
     isLoading = true;
+    showLoader();
 
     try {
         const url = `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`;
         const data = await fetchJson(url);
 
-        const newPokemons = await fetchAll(data.results.map(p => p.url));
+        const newPokemons = await fetchAll(
+            data.results.map(pokemon => pokemon.url)
+        );
 
         pokemonCache = append
             ? [...pokemonCache, ...newPokemons]
@@ -56,11 +61,19 @@ async function loadPokemons(append = false) {
         renderCards(pokemonCache);
 
         offset += limit;
+
     } catch (err) {
+
         console.error(err);
-        cardContainer.innerHTML = createErrorHTML("Fehler beim Laden der Pokémon");
+
+        cardContainer.innerHTML = createErrorHTML(
+            "Fehler beim Laden der Pokémon"
+        );
+
     } finally {
+
         isLoading = false;
+        hideLoader();
     }
 }
 
@@ -70,7 +83,7 @@ function loadMorePokemons() {
 
 document.getElementById("loadMoreBtn")
     .addEventListener("click", loadMorePokemons);
-    
+
 //    RENDER CARDS
 
 function renderCards(pokemons) {
@@ -102,10 +115,16 @@ function formatName(name) {
 
 
 //    DIALOG OPEN
+
 function openDialog(index) {
     const p = pokemonCache[index];
 
-    dialogContent.innerHTML = createPokemonDialogHTML(p);
+    dialogContent.innerHTML = createPokemonDialogHTML(
+        p,
+        index,
+        pokemonCache.length
+    );
+
     dialog.classList.add("open");
 }
 
@@ -130,3 +149,17 @@ dialog.addEventListener("click", (e) => {
         dialog.classList.remove("open");
     }
 });
+
+function showLoader() {
+    document.getElementById("loadingSpinner").classList.remove("hidden");
+}
+
+function hideLoader() {
+    document.getElementById("loadingSpinner").classList.add("hidden");
+}
+
+function navigatePokemon(newIndex) {
+    if (newIndex < 0 || newIndex >= pokemonCache.length) return;
+
+    openDialog(newIndex);
+}

@@ -27,12 +27,22 @@ function createTypeIconHTML(typeName) {
     `;
 }
 
-function createPokemonDialogHTML(p) {
+function createPokemonDialogHTML(p, index, total) {
     return `
         <div class="pokemon_dialog">
 
             <div class="pokemon_header">
                 <h2>#${p.id} ${p.name}</h2>
+
+                <div class="dialog_nav">
+                    <button onclick="navigatePokemon(${index - 1})" ${index === 0 ? "disabled" : ""}>
+                        Prev
+                    </button>
+
+                    <button onclick="navigatePokemon(${index + 1})" ${index === total - 1 ? "disabled" : ""}>
+                        Next
+                    </button>
+                </div>
             </div>
 
             <div class="pokemon_image">
@@ -49,14 +59,12 @@ function createPokemonDialogHTML(p) {
             </div>
 
             <div class="pokemon_info">
-
                 ${createAboutTabHTML(p)}
                 ${createStatsTabHTML(p)}
 
                 <div id="tab_evolution" class="tab_content">
                     <p>Evolution Chain folgt später</p>
                 </div>
-
             </div>
 
         </div>

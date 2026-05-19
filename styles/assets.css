@@ -27,3 +27,61 @@
     transform: none;
     box-shadow: none;
 }
+
+
+.pokemon_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    background: linear-gradient(135deg, #ffffff, #f7f7f7);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.pokemon_header h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+    text-transform: capitalize;
+    letter-spacing: 0.5px;
+}
+
+.dialog_nav {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.dialog_nav button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    background: #2f6fed;
+    color: white;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.dialog_nav button:hover {
+    background: #1f55c7;
+    transform: translateY(-1px);
+}
+
+.dialog_nav button:active {
+    transform: translateY(0px);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.dialog_nav button:disabled {
+    background: #c7c7c7;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+    opacity: 0.6;
+}
