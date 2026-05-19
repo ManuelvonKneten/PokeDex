@@ -110,7 +110,7 @@ async function getEvoChain(id) {
 
     while (node) {
         const urlParts = node.species.url.split("/").filter(Boolean);
-        const pokeId = Number(urlParts[urlParts.length - 1]); // FIX
+        const pokeId = Number(urlParts[urlParts.length - 1]);
 
         chain.push({
             id: pokeId,
@@ -123,46 +123,22 @@ async function getEvoChain(id) {
     return chain;
 }
 
+let currentRenderedList = [];
 
-async function renderEvoChain(id) {
-    const evo = await getEvoChain(id);
+function openDialogById(id) {
+    const pokemon = pokemonCache.find(p => p.id === Number(id));
 
-    // 🔥 Background preload starten
-    preloadMissingPokemon(evo.map(e => e.id));
+    if (!pokemon) return;
 
-    return `
-        <div class="evoLine">
-            ${evo.map((e, i) => `
-                <div class="evoStep" onclick="handleEvoClick(${pokeId})">
-
-                    <div class="evoCard">
-                        <img 
-                            class="evoImage"
-                            src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${e.id}.png"
-                            alt="${e.name}"
-                        />
-
-                        <div class="evoText">
-                            #${e.id} ${formatName(e.name)}
-                        </div>
-                    </div>
-
-                </div>
-
-                ${i < evo.length - 1 ? `<div class="evoArrow">→</div>` : ""}
-            `).join("")}
-        </div>
-    `;
+    openDialog(pokemon.id);
 }
 
-
-
 async function preloadMissingPokemon(ids) {
-    const queue = ids.filter(id =>
-        !pokemonCache.some(p => p.id === Number(id))
-    );
+    const uniqueIds = [...new Set(ids.map(Number))];
 
-    for (const id of queue) {
+    for (const id of uniqueIds) {
+        if (pokemonCache.some(p => p.id === id)) continue;
+
         try {
             const data = await fetchJson(`https://pokeapi.co/api/v2/pokemon/${id}`);
             pokemonCache.push(data);
@@ -184,17 +160,17 @@ function formatName(name) {
 
 //    DIALOG OPEN
 
-function openDialog(index) {
-    const p = pokemonCache[index];
+function openDialog(id) {
+    const p = pokemonCache.find(p => p.id === id);
 
     if (!p) {
-        console.warn("Pokemon nicht im Cache:", index);
+        console.warn("Pokemon nicht im Cache:", id);
         return;
     }
 
     dialogContent.innerHTML = createPokemonDialogHTML(
         p,
-        index,
+        id,
         pokemonCache.length
     );
 
@@ -204,17 +180,14 @@ function openDialog(index) {
 
 
 async function handleEvoClick(id) {
-    let index = pokemonCache.findIndex(p => p.id === Number(id));
+    let pokemon = pokemonCache.find(p => p.id === Number(id));
 
-    if (index === -1) {
-        const data = await fetchJson(`https://pokeapi.co/api/v2/pokemon/${id}`);
-
-        pokemonCache.push(data);
-
-        index = pokemonCache.length - 1;
+    if (!pokemon) {
+        pokemon = await fetchJson(`https://pokeapi.co/api/v2/pokemon/${id}`);
+        pokemonCache.push(pokemon);
     }
 
-    openDialog(index);
+    openDialogById(pokemon.id);
 }
 
 function showTab(tabName) {
@@ -254,52 +227,39 @@ function navigatePokemon(newIndex) {
 const pokemonSearch = document.getElementById("pokemonSearch");
 
 pokemonSearch.addEventListener("input", searchPokemon);
+async function searchPokemon(event) {
+    const value = event?.target?.value;
 
-async function searchPokemon(search) {
-    search = search.toLowerCase().trim();
+    if (typeof value !== "string") return;
 
-    // erst im Cache suchen
+    let search = value.toLowerCase().trim();
+
     let results = pokemonCache.filter(p =>
         p.name.includes(search)
     );
 
-    // falls nichts gefunden -> API Versuch
     if (results.length === 0) {
         try {
-            const pokemon = await fetchJson(
+            let pokemon = await fetchJson(
                 `https://pokeapi.co/api/v2/pokemon/${search}`
             );
 
-            // nur hinzufügen wenn noch nicht vorhanden
             const exists = pokemonCache.some(p => p.id === pokemon.id);
 
             if (!exists) {
                 pokemonCache.push(pokemon);
             }
 
-            results = [pokemon];
+            results = [{
+                ...pokemon,
+                isSearch: true
+            }];
 
         } catch (err) {
-            cardContainer.innerHTML = `
-                <p>Kein Pokémon gefunden</p>
-            `;
+            cardContainer.innerHTML = `<p>Kein Pokémon gefunden</p>`;
             return;
         }
     }
 
     renderCards(results);
 }
-
-document
-    .getElementById("pokemonSearch")
-    .addEventListener("input", (e) => {
-
-        const value = e.target.value;
-
-        if (value.length < 1) {
-            renderCards(pokemonCache);
-            return;
-        }
-
-        searchPokemon(value);
-    });

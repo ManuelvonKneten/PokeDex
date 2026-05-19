@@ -1,14 +1,20 @@
 function createPokemonCardHTML(p, i, primaryType, typeClasses, typesHtml) {
 
-    return `
-        <article class="pokemonCard ${primaryType} ${typeClasses}" onclick="openDialog(${i})">
+    const hp = p.stats.find(s => s.stat.name === "hp").base_stat;
+    const attack = p.stats.find(s => s.stat.name === "attack").base_stat;
+    const defense = p.stats.find(s => s.stat.name === "defense").base_stat;
 
-            <div class="cardImage">
-                <img src="${p.sprites.other.home.front_default}" alt="${p.name}">
-            </div>
+    return `
+        <article class="pokemonCard ${primaryType} ${typeClasses}" onclick="openDialog(${p.id})">
+
+        <div class="cardImage">
+            <span class="pokemonHp hpRibbon">HP ${hp}</span> 
+            <span class="pokemonHp attackRibbon">ATTACK ${attack}</span>
+            <img src="${p.sprites.other.home.front_default}" alt="${p.name}">
+        </div>
 
             <div class="cardContent">
-                <h2>#${p.id} <br> ${formatName(p.name)}</h2>
+                <h2>#${p.id} ${formatName(p.name)}</h2>
 
                 <div class="pokemonTypes">
                     ${typesHtml}
@@ -118,32 +124,29 @@ function createStatsTabHTML(p) {
 async function renderEvoChain(id) {
     const evo = await getEvoChain(id);
 
+    preloadMissingPokemon(evo.map(e => e.id));
+
     return `
         <div class="evoLine">
-            ${evo.map((e, i) => {
+            ${evo.map((e, i) => `
+                <div class="evoStep" onclick="handleEvoClick(${e.id})">
 
-                const index = pokemonCache.findIndex(p => p.id === Number(e.id));
+                    <div class="evoCard">
+                        <img 
+                            class="evoImage"
+                            src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${e.id}.png"
+                            alt="${e.name}"
+                        />
 
-                return `
-                    <div class="evoStep" onclick="openDialog(${index})">
-
-                        <div class="evoCard">
-                            <img 
-                                class="evoImage"
-                                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${e.id}.png"
-                                alt="${e.name}"
-                            />
-
-                            <div class="evoText">
-                                #${e.id} ${formatName(e.name)}
-                            </div>
+                        <div class="evoText">
+                            #${e.id} ${formatName(e.name)}
                         </div>
-
                     </div>
 
-                    ${i < evo.length - 1 ? `<div class="evoArrow">→</div>` : ""}
-                `;
-            }).join("")}
+                </div>
+
+                ${i < evo.length - 1 ? `<div class="evoArrow">→</div>` : ""}
+            `).join("")}
         </div>
     `;
 }
