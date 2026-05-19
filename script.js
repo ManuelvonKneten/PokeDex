@@ -36,7 +36,7 @@ function init() {
 
 //    LOAD POKEMONS
 let offset = 0;
-const limit = 600;
+const limit = 40;
 let isLoading = false;
 
 async function loadPokemons(append = false) {
@@ -77,6 +77,7 @@ async function loadPokemons(append = false) {
     }
 }
 
+
 function loadMorePokemons() {
     loadPokemons(true);
 }
@@ -100,7 +101,74 @@ function renderCards(pokemons) {
     cardContainer.innerHTML = html;
 }
 
+async function getEvoChain(id) {
+    const species = await fetchJson(`https://pokeapi.co/api/v2/pokemon-species/${id}`);
+    const evoData = await fetchJson(species.evolution_chain.url);
 
+    const chain = [];
+    let node = evoData.chain;
+
+    while (node) {
+        const urlParts = node.species.url.split("/").filter(Boolean);
+        const pokeId = Number(urlParts[urlParts.length - 1]); // FIX
+
+        chain.push({
+            id: pokeId,
+            name: node.species.name
+        });
+
+        node = node.evolves_to[0];
+    }
+
+    return chain;
+}
+
+
+async function renderEvoChain(id) {
+    const evo = await getEvoChain(id);
+
+    // 🔥 Background preload starten
+    preloadMissingPokemon(evo.map(e => e.id));
+
+    return `
+        <div class="evoLine">
+            ${evo.map((e, i) => `
+                <div class="evoStep" onclick="handleEvoClick(${pokeId})">
+
+                    <div class="evoCard">
+                        <img 
+                            class="evoImage"
+                            src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${e.id}.png"
+                            alt="${e.name}"
+                        />
+
+                        <div class="evoText">
+                            #${e.id} ${formatName(e.name)}
+                        </div>
+                    </div>
+
+                </div>
+
+                ${i < evo.length - 1 ? `<div class="evoArrow">→</div>` : ""}
+            `).join("")}
+        </div>
+    `;
+}
+
+
+
+async function preloadMissingPokemon(ids) {
+    const queue = ids.filter(id =>
+        !pokemonCache.some(p => p.id === Number(id))
+    );
+
+    for (const id of queue) {
+        try {
+            const data = await fetchJson(`https://pokeapi.co/api/v2/pokemon/${id}`);
+            pokemonCache.push(data);
+        } catch (e) {}
+    }
+}
 
 function createTypeIconsHTML(types) {
     return types
@@ -119,6 +187,11 @@ function formatName(name) {
 function openDialog(index) {
     const p = pokemonCache[index];
 
+    if (!p) {
+        console.warn("Pokemon nicht im Cache:", index);
+        return;
+    }
+
     dialogContent.innerHTML = createPokemonDialogHTML(
         p,
         index,
@@ -129,6 +202,20 @@ function openDialog(index) {
 }
 
 
+
+async function handleEvoClick(id) {
+    let index = pokemonCache.findIndex(p => p.id === Number(id));
+
+    if (index === -1) {
+        const data = await fetchJson(`https://pokeapi.co/api/v2/pokemon/${id}`);
+
+        pokemonCache.push(data);
+
+        index = pokemonCache.length - 1;
+    }
+
+    openDialog(index);
+}
 
 function showTab(tabName) {
 
@@ -163,3 +250,56 @@ function navigatePokemon(newIndex) {
 
     openDialog(newIndex);
 }
+
+const pokemonSearch = document.getElementById("pokemonSearch");
+
+pokemonSearch.addEventListener("input", searchPokemon);
+
+async function searchPokemon(search) {
+    search = search.toLowerCase().trim();
+
+    // erst im Cache suchen
+    let results = pokemonCache.filter(p =>
+        p.name.includes(search)
+    );
+
+    // falls nichts gefunden -> API Versuch
+    if (results.length === 0) {
+        try {
+            const pokemon = await fetchJson(
+                `https://pokeapi.co/api/v2/pokemon/${search}`
+            );
+
+            // nur hinzufügen wenn noch nicht vorhanden
+            const exists = pokemonCache.some(p => p.id === pokemon.id);
+
+            if (!exists) {
+                pokemonCache.push(pokemon);
+            }
+
+            results = [pokemon];
+
+        } catch (err) {
+            cardContainer.innerHTML = `
+                <p>Kein Pokémon gefunden</p>
+            `;
+            return;
+        }
+    }
+
+    renderCards(results);
+}
+
+document
+    .getElementById("pokemonSearch")
+    .addEventListener("input", (e) => {
+
+        const value = e.target.value;
+
+        if (value.length < 1) {
+            renderCards(pokemonCache);
+            return;
+        }
+
+        searchPokemon(value);
+    });

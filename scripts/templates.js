@@ -35,41 +35,40 @@ function createPokemonDialogHTML(p, index, total) {
                 <h2>#${p.id} ${p.name}</h2>
 
                 <div class="dialog_nav">
-                    <button onclick="navigatePokemon(${index - 1})" ${index === 0 ? "disabled" : ""}>
-                        Prev
-                    </button>
-
-                    <button onclick="navigatePokemon(${index + 1})" ${index === total - 1 ? "disabled" : ""}>
-                        Next
-                    </button>
+                    <button onclick="navigatePokemon(${index - 1})" ${index === 0 ? "disabled" : ""}>Prev</button>
+                    <button onclick="navigatePokemon(${index + 1})" ${index === total - 1 ? "disabled" : ""}>Next</button>
                 </div>
             </div>
 
             <div class="pokemon_image">
-                <img 
-                    src="${p.sprites.other.home.front_default}" 
-                    alt="${p.name}"
-                />
+                <img src="${p.sprites.other.home.front_default}" alt="${p.name}" />
             </div>
 
             <div class="dialog_menu">
                 <button onclick="showTab('stats')">Main Stats</button>
-                <button onclick="showTab('evolution')">Evo Chain</button>
+                <button onclick="loadEvoTab(${p.id})">Evo Chain</button>
                 <button onclick="showTab('about')">About</button>
             </div>
 
             <div class="pokemon_info">
                 ${createAboutTabHTML(p)}
                 ${createStatsTabHTML(p)}
-
-                <div id="tab_evolution" class="tab_content">
-                    <p>Evolution Chain folgt später</p>
-                </div>
+                <div id="tab_evolution" class="tab_content"></div>
             </div>
 
         </div>
     `;
 }
+
+async function loadEvoTab(id) {
+    showTab('evolution');
+
+    const container = document.getElementById("tab_evolution");
+    container.innerHTML = "Loading...";
+
+    container.innerHTML = await renderEvoChain(id);
+}
+
 
 function createAboutTabHTML(p) {
     return `
@@ -115,6 +114,40 @@ function createStatsTabHTML(p) {
         </div>
     `;
 }
+
+async function renderEvoChain(id) {
+    const evo = await getEvoChain(id);
+
+    return `
+        <div class="evoLine">
+            ${evo.map((e, i) => {
+
+                const index = pokemonCache.findIndex(p => p.id === Number(e.id));
+
+                return `
+                    <div class="evoStep" onclick="openDialog(${index})">
+
+                        <div class="evoCard">
+                            <img 
+                                class="evoImage"
+                                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${e.id}.png"
+                                alt="${e.name}"
+                            />
+
+                            <div class="evoText">
+                                #${e.id} ${formatName(e.name)}
+                            </div>
+                        </div>
+
+                    </div>
+
+                    ${i < evo.length - 1 ? `<div class="evoArrow">→</div>` : ""}
+                `;
+            }).join("")}
+        </div>
+    `;
+}
+
 
 function createErrorHTML(message) {
     return `

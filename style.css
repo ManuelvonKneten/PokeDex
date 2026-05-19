@@ -13,19 +13,90 @@ body {
 }
 
 header {
-    background: linear-gradient(90deg, #776728, #0a0a0a);
-    padding: 24px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    width: 100%;
+    padding: 35px 24px;
+
+    background: linear-gradient(
+        135deg,
+        #ef5350 0%,     /* Rot */
+        #ffffff 45%,    /* Weiß */
+        #ffffff 55%,
+        #3b4cca 100%    /* Blau */
+    );
+
+    border-bottom: 3px solid #ffcb05;
 }
-
-.header_container {
-    max-width: 1400px;
-    margin: 0 auto;
-
+.headerContainer {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
 
-    gap: 24px;
+/* LEFT: Pokéball */
+.logo_icon {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+.logo_icon img {
+    height: 164px;
+}
+
+/* CENTER: Title */
+.logo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* RIGHT AREA WRAPPER */
+.navLinks,
+.search_container {
+    display: flex;
+    align-items: center;
+}
+
+/* RIGHT STACK LAYOUT */
+.headerContainer {
+    flex-wrap: wrap;
+}
+
+/* Nav + Search unten rechts */
+.navLinks {
+    gap: 16px;
+}
+
+.navLinks a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    font-size: 14px;
+    transition: color 0.2s ease;
+}
+
+.navLinks a:hover {
+    color: #2f6fed;
+}
+
+.search_container {
+    margin-left: 16px;
+}
+
+.search_container input {
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    outline: none;
+    font-size: 14px;
+    transition: border 0.2s ease;
+}
+
+.search_container input:focus {
+    border-color: #2f6fed;
 }
 
 .logo {
@@ -81,6 +152,7 @@ main {
     font-size: 48px;
     color: #1d2c5e;
     margin-bottom: 16px;
+    text-align: center;
 }
 
 .hero_section p {
@@ -398,6 +470,51 @@ footer {
 
 .hidden {
     display: none;
+}
+
+.evoLine {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 10px 0;
+}
+
+.evoCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    border-radius: 12px;
+    background: #f7f7f7;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.evoCard:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+.evoImage {
+    width: 80px;
+    height: 80px;
+    image-rendering: pixelated;
+}
+
+.evoText {
+    margin-top: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: capitalize;
+    text-align: center;
+}
+
+.evoArrow {
+    font-size: 20px;
+    font-weight: bold;
+    color: #999;
 }
 
 @keyframes fadeIn {
