@@ -297,7 +297,7 @@ footer {
 
 .cardImage {
     width: 100%;
-    height: 220px;
+    height: 260px;
     position: relative;
     overflow: hidden;
 }
@@ -352,7 +352,7 @@ footer {
 
 
 .cardContent {
-    padding: 40px;
+    padding: 20px;
     background-color: rgb(230, 230, 230);
     border-radius: 0px 0px 24px 24px;
 }

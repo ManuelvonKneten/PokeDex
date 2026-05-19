@@ -1,6 +1,3 @@
-// TODO html auslagern !!
-// Function max 14 Zeilen 
-
 async function fetchJson(url) {
     return fetch(url).then(r => r.json());
 }
