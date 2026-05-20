@@ -299,3 +299,14 @@ function formatName(name) {
 toggleButton.addEventListener("click", () => {
     document.body.classList.toggle("darkMode");
 });
+
+document.addEventListener("click", (e) => {
+    const el = e.target.closest("[data-id]");
+    if (!el) return;
+
+    openDialogById(el.dataset.id);
+});
+
+function handleEvoClick(id) {
+    openDialogById(id);
+}
