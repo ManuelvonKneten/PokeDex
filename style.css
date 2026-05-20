@@ -277,6 +277,7 @@ footer {
 
     background-color: #f3f3f3;
     border-radius: 12px;
+    margin: 5px
 }
 
 .info_label {
@@ -383,7 +384,7 @@ footer {
     padding: 20px;
 
     animation: fadeIn 0.2s ease;
-    height: 740px;
+    height: 760px;
     max-width: 80vh;
 }
 .dialog_menu {

@@ -39,6 +39,7 @@
     position: sticky;
     top: 0;
     z-index: 10;
+    border-radius: 16px;
 }
 
 .pokemon_header h2 {
@@ -92,4 +93,30 @@
     height: auto;
     display: block;
     margin: 0 auto;
+}
+
+.darkMode {
+    background-color: #1a1a1a;
+    color: white;
+}
+.darkMode .cardContent {
+    background-color: rgb(44, 44, 45);
+}
+
+.darkMode .dialogContent {
+    background-color: rgb(44, 44, 45);
+}
+
+.darkMode .pokemon_header {
+    background: linear-gradient(135deg, #c3baba, #352929);
+}
+
+.darkMode .dialog_menu button {
+    background: linear-gradient(135deg, #c3baba, #352929);
+}
+.darkMode .info_row {
+    background: linear-gradient(135deg, #c3baba, #352929);
+}
+.darkMode .evoCard {
+    background: linear-gradient(135deg, #c3baba, #352929);
 }

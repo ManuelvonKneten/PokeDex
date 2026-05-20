@@ -260,3 +260,9 @@ async function searchPokemon(event) {
 
     renderCards(results);
 }
+
+const toggleButton = document.getElementById("darkModeButton");
+
+toggleButton.addEventListener("click", () => {
+    document.body.classList.toggle("darkMode");
+});
