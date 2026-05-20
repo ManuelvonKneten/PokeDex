@@ -395,7 +395,7 @@ footer {
 
 .dialog_menu button {
     flex: 1;
-    height: 50px;
+    height: 32px;
     padding: 10px;
 
     display: flex;
@@ -544,10 +544,10 @@ footer {
     color: #999;
 }
 
-@keyframes fadeIn {
+/* @keyframes fadeIn {
     from { transform: scale(0.9); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
-}
+} */
 
 @media (max-width: 768px) {
 
