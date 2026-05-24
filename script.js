@@ -22,6 +22,7 @@ const pokemonSearch = document.getElementById("pokemonSearch");
 const toggleButton = document.getElementById("darkModeButton");
 
 
+
 // =======================
 // STATE
 // =======================
@@ -296,17 +297,48 @@ function formatName(name) {
 // EVENTS
 // =======================
 
-toggleButton.addEventListener("click", () => {
-    document.body.classList.toggle("darkMode");
-});
 
-document.addEventListener("click", (e) => {
-    const el = e.target.closest("[data-id]");
-    if (!el) return;
-
-    openDialogById(el.dataset.id);
-});
 
 function handleEvoClick(id) {
     openDialogById(id);
 }
+
+function toggleDarkMode() {
+    document.body.classList.toggle("darkMode");
+
+    const isDark = document.body.classList.contains("darkMode");
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+}
+
+function init() {
+    applySavedTheme();
+    loadPokemons();
+}
+
+function applySavedTheme() {
+    const savedTheme = localStorage.getItem("theme");
+
+    if (savedTheme === "dark") {
+        document.body.classList.add("darkMode");
+    } else {
+        document.body.classList.remove("darkMode");
+    }
+}
+
+if (!localStorage.getItem("theme")) {
+    localStorage.setItem("theme", "light");
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    if (!toggleButton) return;
+
+    toggleButton.addEventListener("click", () => {
+        document.body.classList.toggle("darkMode");
+
+        localStorage.setItem(
+            "theme",
+            document.body.classList.contains("darkMode") ? "dark" : "light"
+        );
+    });
+});
