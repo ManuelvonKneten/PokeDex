@@ -272,4 +272,32 @@ function closePokemonDialog() {
     document.body.style.overflow = "";
 }
 
+async function loadEvoTab(id) {
+    showTab('evolution');
 
+    const container = document.getElementById("tab_evolution");
+    container.innerHTML = getLoadingSpinnerTemplate();
+
+    try {
+        const evoHtml = await renderEvoChain(id);
+        container.innerHTML = evoHtml;
+    } catch (error) {
+        container.innerHTML = `<p>Error loading evolution chain</p>`;
+        console.error(error);
+    }
+}
+
+function createPokemonCardHTML(p, i, primaryType, typeClasses, typesHtml) {
+    const hp = p.stats.find(s => s.stat.name === "hp").base_stat;
+    const attack = p.stats.find(s => s.stat.name === "attack").base_stat;
+    const defense = p.stats.find(s => s.stat.name === "defense").base_stat;
+
+    return getPokemonCardTemplate(
+        p,
+        hp,
+        attack,
+        primaryType,
+        typeClasses,
+        typesHtml
+    );
+}
