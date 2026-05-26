@@ -73,8 +73,11 @@ async function loadEvoTab(id) {
     showTab('evolution');
 
     const container = document.getElementById("tab_evolution");
-    container.innerHTML = "Loading...";
-
+    container.innerHTML = `
+        <div class="loadingSpinner">
+            <img src="./icons/misc/loading_spinner.png" alt="Loading">
+        </div>
+    `;
     container.innerHTML = await renderEvoChain(id);
 }
 
