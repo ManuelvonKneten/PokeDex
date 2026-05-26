@@ -243,7 +243,7 @@ function buildSearchResult(pokemon) {
     return [{ ...pokemon, isSearch: true }];
 }
 
-pokemonSearch.addEventListener("input", searchPokemon);
+// pokemonSearch.addEventListener("input", searchPokemon);
 
 // =======================
 // MAIN SEARCH

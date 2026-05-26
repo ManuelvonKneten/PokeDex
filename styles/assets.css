@@ -144,3 +144,39 @@
     transition: 0.2s ease;
     border-color: rgba(255, 255, 255, 0.15);
 }
+
+.searchBtn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 12px;
+    background-color: #2353a7;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: transform 0.15s ease, background-color 0.2s ease;
+}
+
+.searchBtn:hover {
+    background-color: #1e49a1;
+    transform: translateY(-1px);
+}
+
+.searchBtn:active {
+    transform: scale(0.96);
+}
+
+/* Icon über Mask (sehr sauber & skalierbar) */
+.searchBtn::before {
+    content: "";
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M10 2a8 8 0 105.293 14.293l4.707 4.707 1.414-1.414-4.707-4.707A8 8 0 0010 2z'/%3E%3C/svg%3E") no-repeat center;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M10 2a8 8 0 105.293 14.293l4.707 4.707 1.414-1.414-4.707-4.707A8 8 0 0010 2z'/%3E%3C/svg%3E") no-repeat center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+}
