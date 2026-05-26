@@ -299,7 +299,6 @@ function formatName(name) {
 // =======================
 
 
-
 function handleEvoClick(id) {
     openDialogById(id);
 }
@@ -316,31 +315,15 @@ function init() {
     loadPokemons();
 }
 
-function applySavedTheme() {
-    const savedTheme = localStorage.getItem("theme");
+function applySavedTheme(){const t=localStorage.getItem("theme");document.body.classList.toggle("darkMode",t==="dark");}
 
-    if (savedTheme === "dark") {
-        document.body.classList.add("darkMode");
-    } else {
-        document.body.classList.remove("darkMode");
-    }
-}
+if(!localStorage.getItem("theme"))localStorage.setItem("theme","light");
 
-if (!localStorage.getItem("theme")) {
-    localStorage.setItem("theme", "light");
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    if (!toggleButton) return;
-
-    toggleButton.addEventListener("click", () => {
+document.addEventListener("DOMContentLoaded",()=>{
+    if(!toggleButton)return;
+    toggleButton.addEventListener("click",()=>{
         document.body.classList.toggle("darkMode");
-
-        localStorage.setItem(
-            "theme",
-            document.body.classList.contains("darkMode") ? "dark" : "light"
-        );
+        localStorage.setItem("theme",document.body.classList.contains("darkMode")?"dark":"light");
     });
 });
 
