@@ -30,7 +30,7 @@ let pokemonCache = [];
 let currentRenderedList = [];
 
 let offset = 0;
-const limit = 10;
+const limit = 25;
 let isLoading = false;
 
 
@@ -254,7 +254,12 @@ async function searchPokemon() {
     if (typeof value !== "string") return;
 
     const search = normalizeInput(value);
-    if (!search) return renderCards(pokemonCache);
+    const isOnlyLetters = /^[a-zäöüß]+$/i.test(search);
+
+    if (!search || search.length < 3 || !isOnlyLetters) {
+        renderCards(pokemonCache);
+        return;
+    }
 
     let results = filterCache(search);
 
@@ -283,6 +288,8 @@ async function searchPokemon() {
         cardContainer.innerHTML = `<p>Kein Pokémon gefunden</p>`;
     }
 }
+
+
 
 
 // =======================

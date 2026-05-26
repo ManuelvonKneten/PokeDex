@@ -104,40 +104,40 @@
     background-color: rgb(44, 44, 45);
 }
 
-/* Base Surface für alle Cards im DarkMode */
+
 .darkMode .dialogContent {
     background-color: #1e1f24;
     color: #e6e6e6;
 }
 
-/* Header konsistent mit leichtem Depth-Look */
+
 .darkMode .pokemon_header {
     background: linear-gradient(135deg, #2a2d36, #1b1d23);
     color: #f2f2f2;
 }
 
-/* Buttons im Menü */
+
 .darkMode .dialog_menu button {
     background: linear-gradient(135deg, #2b2f3a, #1c1f27);
     color: #e6e6e6;
     border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* Info Rows als Card-Elemente */
+
 .darkMode .info_row {
     background: #242732;
     color: #dcdcdc;
     border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-/* Evo Cards klar abgesetzt */
+
 .darkMode .evoCard {
     background: linear-gradient(135deg, #262a35, #1b1e26);
     color: #eaeaea;
     border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* optional: Hover Feedback für Cards */
+
 .darkMode .info_row:hover,
 .darkMode .evoCard:hover {
     transform: translateY(-2px);
@@ -169,7 +169,6 @@
     transform: scale(0.96);
 }
 
-/* Icon über Mask (sehr sauber & skalierbar) */
 .searchBtn::before {
     content: "";
     width: 20px;
