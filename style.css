@@ -195,7 +195,7 @@ main {
 }
 
 footer {
-    height: 135px;
+    height: 96px;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -470,8 +470,8 @@ footer {
 }
 
 .loadingSpinner img {
-    width: 120px;
-    height: 120px;
+    width: 180px;
+    height: 180px;
     animation: spin 1.2s linear infinite;
     will-change: transform;
     transform: translateZ(0);

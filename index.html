@@ -16,24 +16,22 @@
 <body>
 
 <header>
-    <div class="headerContainer">
+<div class="headerContainer">
+              <img src="./icons/misc/pokemon.png" class="pokemonBanner" alt="pokemon">
 
-        <img src="/icons/misc/pokeball.png" alt="Pokéball" class="logo_icon">    
-
-
+    <div class="search_container">
+        <input type="text" id="pokemonSearch" placeholder="Pokémon suchen...">
+        <button type="button" class="loadMoreBtn" onclick="searchPokemon()">Suchen</button>
     </div>
+
+</div>
 </header>
 
 <main>
 
     <section class="hero_section">
-
-
-          <img src="./icons/misc/pokemon.png" class="pokemonBanner" alt="pokemon">
- 
-
-
-    </section>
+          <!-- <img src="./icons/misc/pokemon.png" class="pokemonBanner" alt="pokemon"> -->
+     </section>
 
     <section id="cardContainer" class="card_container">
 
@@ -43,7 +41,7 @@
 
     </section>
         <div id="loadingSpinner" class="loadingSpinner hidden">
-            <img src="./icons/misc/pokeball.png" alt="Loading">
+            <img src="./icons/misc/loading_spinner.png" alt="Loading">
         </div>
 </main>
 
@@ -54,15 +52,10 @@
 <footer>
 
     <div class="footer_container">
-                    <div class="search_container">
-            <input type="text" id="pokemonSearch" placeholder="Pokémon suchen...">
-
-            <button type="button" class="loadMoreBtn" onclick="searchPokemon()">Suchen</button>
-        </div>
-
+  
         <p>
-        <button class="loadMoreBtn">Load More</button>  
-        <button class="loadMoreBtn" onclick="toggleDarkMode()">Dark Mode</button>       
+        <button class="loadMoreBtn">More</button>  
+        <button class="loadMoreBtn" onclick="toggleDarkMode()">BackGround</button>       
 
         </p>
 
