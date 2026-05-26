@@ -81,7 +81,6 @@ async function loadEvoTab(id) {
     container.innerHTML = await renderEvoChain(id);
 }
 
-
 function createAboutTabHTML(p) {
     return `
         <div id="tab_about" class="tab_content active">
@@ -156,7 +155,6 @@ async function renderEvoChain(id) {
         </div>
     `;
 }
-
 
 function createErrorHTML(message) {
     return `
