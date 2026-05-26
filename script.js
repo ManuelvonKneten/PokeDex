@@ -343,3 +343,7 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     });
 });
+
+function closePokemonDialog() {
+    document.getElementById("pokemonDialog")?.classList.remove("open");
+}

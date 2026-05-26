@@ -38,11 +38,14 @@ function createPokemonDialogHTML(p, index, total) {
         <div class="pokemon_dialog">
 
             <div class="pokemon_header">
-                <h2>#${p.id} ${p.name}</h2>
+                <h2>#${p.id} <br> ${p.name}</h2>
 
                 <div class="dialog_nav">
-                    <button onclick="navigatePokemon(${index - 1})" ${index === 0 ? "disabled" : ""}>Prev</button>
-                    <button onclick="navigatePokemon(${index + 1})" ${index === total - 1 ? "disabled" : ""}>Next</button>
+
+                <button onclick="navigatePokemon(${index - 1})" ${index === 0 ? "disabled" : ""}>Prev</button>
+                <button onclick="navigatePokemon(${index + 1})" ${index === total - 1 ? "disabled" : ""}>Next</button>
+                <button onclick="closePokemonDialog()">X</button>                
+
                 </div>
             </div>
 

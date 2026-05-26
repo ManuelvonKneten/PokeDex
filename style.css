@@ -195,44 +195,48 @@ main {
 }
 
 footer {
+    height: 135px;
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-
     background: #1d1d1d;
     color: white;
-
     padding: 24px;
-
     z-index: 1000;
 }
 
 .footer_container {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 24px;
+    justify-content: center;
     flex-wrap: wrap;
+    gap: 24px;
     width: 100%;
     padding: 16px 24px;
+    text-align: center;
 }
 
 .footer_container p {
     margin: 0;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 12px;
+    width: 100%;
 }
 
 .search_container {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 12px;
+    width: 100%;
 }
 
 #pokemonSearch {
     width: 220px;
+    text-align: center;
 }
 
 .pokemon_dialog {
