@@ -3,10 +3,10 @@ async function fetchJson(url) {
     if (!res.ok) throw new Error("Network error");
     return res.json();
 }
+
 async function fetchAll(urls) {
     return Promise.all(urls.map(fetchJson));
 }
-
 
 const cardContainer = document.getElementById("cardContainer");
 const dialog = document.getElementById("pokemonDialog");
@@ -15,14 +15,11 @@ const pokemonSearch = document.getElementById("pokemonSearch");
 const toggleButton = document.getElementById("darkModeButton");
 const pokemonRequestCache = new Map();
 
-
 let pokemonCache = [];
-
 
 let offset = 0;
 const limit = 25;
 let isLoading = false;
-
 
 const basePath = "./icons/types/";
 
@@ -38,20 +35,16 @@ function init() {
     loadPokemons();
 }
 
-
 document.addEventListener("DOMContentLoaded", init);
-
 
 function buildPokemonUrl(limit, offset) {
     return `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`;
 }
 
-
 function handleError(err, container) {
     console.error(err);
     container.innerHTML = createErrorHTML("Fehler beim Laden der Pokémon");
 }
-
 
 function simplifyPokemon(p) {
     return {
@@ -65,7 +58,6 @@ function simplifyPokemon(p) {
     };
 }
 
-
 async function fetchSimplifiedPokemons(urls) {
     const data = await fetchAll(urls);
     return data.map(simplifyPokemon);
@@ -77,12 +69,10 @@ const updateCache = (append, cache, data) => {
     return cache.concat(data);
 };
 
-
 const fetchPokemonsPage = async () => {
     const { results } = await fetchJson(buildPokemonUrl(limit, offset));
     return fetchSimplifiedPokemons(results.map(p => p.url));
 };
-
 
 async function loadPokemons(append = false) {
     if (isLoading) return;
@@ -100,18 +90,15 @@ async function loadPokemons(append = false) {
     }
 }
 
-
 async function getPokemonFromApi(search) {
     const pokemonData = await fetchPokemonByNameCached(search.toLowerCase());
     return buildSimplifiedPokemon(pokemonData);
 }
 
-
 function isValidSearch(search) {
     const onlyLetters = /^[a-zäöüß]+$/i.test(search);
     return search && search.length >= 3 && onlyLetters;
 }
-
 
 async function searchPokemon() {
     const value = pokemonSearch.value;
@@ -131,7 +118,6 @@ async function searchPokemon() {
     }
 }
 
-
 function loadMorePokemons() {
     loadPokemons(true);
 }
@@ -140,7 +126,6 @@ document.querySelectorAll(".loadMoreBtn")
     .forEach(button => {
         button.addEventListener("click", loadMorePokemons);
     });
-
 
 function renderCards(pokemons) {
     let html = "";
@@ -154,7 +139,6 @@ function renderCards(pokemons) {
     }
     cardContainer.innerHTML = html;
 }
-
 
 async function getEvoChain(id) {
     const species = await fetchJson(`https://pokeapi.co/api/v2/pokemon-species/${id}`);
@@ -173,7 +157,6 @@ async function getEvoChain(id) {
     return chain;
 }
 
-
 async function preloadMissingPokemon(ids) {
     const uniqueIds = [...new Set(ids.map(Number))];
     for (const id of uniqueIds) {
@@ -185,13 +168,11 @@ async function preloadMissingPokemon(ids) {
     }
 }
 
-
 function openDialogById(id) {
     const pokemon = pokemonCache.find(p => p.id === Number(id));
     if (!pokemon) return;
     openDialog(pokemon.id);
 }
-
 
 function openDialog(id) {
     const p = pokemonCache.find(p => p.id === id);
@@ -208,12 +189,10 @@ function openDialog(id) {
     document.body.style.overflow = "hidden";
 }
 
-
 function navigatePokemon(newIndex) {
     if (newIndex < 0 || newIndex >= pokemonCache.length) return;
     openDialog(newIndex);
 }
-
 
 dialog.addEventListener("click", (e) => {
     if (e.target.id === "pokemonDialog") {
@@ -221,7 +200,6 @@ dialog.addEventListener("click", (e) => {
         document.body.style.overflow = "";
     }
 });
-
 
 function showTab(tabName) {
     const tabs = document.querySelectorAll(".tab_content");
@@ -231,11 +209,9 @@ function showTab(tabName) {
         .classList.add("active");
 }
 
-
 function normalizeInput(value) {
     return value.toLowerCase().trim();
 }
-
 
 function filterCache(search) {
     return pokemonCache.filter(p =>
@@ -243,11 +219,9 @@ function filterCache(search) {
     );
 }
 
-
 function existsInCache(id) {
     return pokemonCache.some(p => p.id === id);
 }
-
 
 async function fetchPokemonByNameCached(name) {
     if (pokemonRequestCache.has(name)) {
@@ -258,16 +232,13 @@ async function fetchPokemonByNameCached(name) {
     return data;
 }
 
-
 function showLoader() {
     document.getElementById("loadingSpinner").classList.remove("hidden");
 }
 
-
 function hideLoader() {
     document.getElementById("loadingSpinner").classList.add("hidden");
 }
-
 
 function createTypeIconsHTML(types) {
     return types
@@ -278,7 +249,6 @@ function createTypeIconsHTML(types) {
 function formatName(name) {
     return name.charAt(0).toUpperCase() + name.slice(1);
 }
-
 
 function handleEvoClick(id) {
     openDialogById(id);
@@ -292,12 +262,10 @@ function toggleDarkMode() {
 
 if(!localStorage.getItem("theme"))localStorage.setItem("theme","light");
 
-
 function applySavedTheme() {
     const theme = localStorage.getItem("theme");
     document.body.classList.toggle("darkMode", theme === "dark");
 }
-
 
 function closePokemonDialog() {
     document.getElementById("pokemonDialog")?.classList.remove("open");

@@ -1,0 +1,15 @@
+@media (max-width: 768px) {
+
+    .header_container {
+        flex-direction: column;
+    }
+
+    nav {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .hero_section h1 {
+        font-size: 36px;
+    }
+}
