@@ -1,4 +1,4 @@
-#loadMoreBtn {
+.loadMoreBtn {
     padding: 4px 13px;
     font-size: 16px;
     font-weight: 600;
@@ -11,17 +11,17 @@
     transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
 }
 
-#loadMoreBtn:hover {
+.loadMoreBtn:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 22px rgba(0, 0, 0, 0.25);
 }
 
-#loadMoreBtn:active {
+.loadMoreBtn:active {
     transform: translateY(0);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-#loadMoreBtn:disabled {
+.loadMoreBtn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
     transform: none;

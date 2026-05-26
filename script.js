@@ -109,9 +109,10 @@ function loadMorePokemons() {
     loadPokemons(true);
 }
 
-document.getElementById("loadMoreBtn")
-    .addEventListener("click", loadMorePokemons);
-
+document.querySelectorAll(".loadMoreBtn")
+    .forEach(button => {
+        button.addEventListener("click", loadMorePokemons);
+    });
 
 // =======================
 // RENDERING
