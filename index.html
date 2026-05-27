@@ -5,71 +5,122 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PokeDex</title>
-    <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="./styles/colors.css">
-    <link rel="stylesheet" href="./styles/assets.css">
-    <link rel="stylesheet" href="./styles/responsiv.css">
-    <link rel="stylesheet" href="./styles/dialog.css">
-    <link rel="stylesheet" href="./styles/theme.css">
-    <link rel="icon" type="image/png" sizes="32x32" href="./icons/misc/pokeball.png">
-    <script src="./script.js" defer></script>
-    <script src="./scripts/templates.js" defer></script>
+
+    <link data-id="style-main" rel="stylesheet" href="./style.css">
+    <link data-id="style-colors" rel="stylesheet" href="./styles/colors.css">
+    <link data-id="style-assets" rel="stylesheet" href="./styles/assets.css">
+    <link data-id="style-responsive" rel="stylesheet" href="./styles/responsiv.css">
+    <link data-id="style-dialog" rel="stylesheet" href="./styles/dialog.css">
+    <link data-id="style-theme" rel="stylesheet" href="./styles/theme.css">
+
+    <link data-id="favicon" rel="icon" type="image/png" sizes="32x32" href="./icons/misc/pokeball.png">
+
+    <script data-id="script-main" src="./script.js" defer></script>
+    <script data-id="script-templates" src="./scripts/templates.js" defer></script>
 </head>
 
 <body>
 
-<header>
-<div class="headerContainer">
-              <img src="./icons/misc/pokemon.png" class="pokemonBanner" alt="pokemon">
+<header data-id="header">
+    <div class="headerContainer">
 
-<div class="search_container">
-    <button type="button" class="homeButton" onclick="goHome()" aria-label="Home"></button>
+        <img data-id="header-logo"
+             src="./icons/misc/pokemon.png"
+             class="pokemonBanner"
+             alt="pokemon">
 
-    <input type="text" id="pokemonSearch" placeholder="Search Pokémon...">
+        <div class="search_container" data-id="search-container">
 
-    <button type="button" class="searchBtn" onclick="searchPokemon()" aria-label="Search"></button>
+            <button type="button"
+                    class="homeButton"
+                    data-id="home-button"
+                    onclick="goHome()"
+                    aria-label="Home">
+            </button>
 
-    <div id="toastContainer"></div>
-</div>
+            <input type="text"
+                   id="pokemonSearch"
+                   data-id="search-input"
+                   placeholder="Search Pokémon...">
 
+            <button type="button"
+                    class="searchBtn"
+                    data-id="search-button"
+                    onclick="searchPokemon()"
+                    aria-label="Search">
+            </button>
+
+            <div id="toastContainer" data-id="toast-container"></div>
+
+        </div>
+    </div>
 </header>
 
-<main>
+<main data-id="main">
 
-    <section class="hero_section">
-     </section>
-    <section id="cardContainer" class="card_container">
+    <section class="hero_section" data-id="hero-section">
+    </section>
 
-        <p class="loading_text">
+    <section id="cardContainer"
+             class="card_container"
+             data-id="card-container">
+
+        <p class="loading_text" data-id="loading-text">
             Loading Cards...
         </p>
 
     </section>
-        <div id="loadingSpinner" class="loadingSpinner hidden">
-            <img src="./icons/misc/loading_spinner.png" alt="Loading">
-        </div>
+
+    <div id="loadingSpinner"
+         class="loadingSpinner hidden"
+         data-id="load-more-button">
+
+        <img src="./icons/misc/loading_spinner.png"
+             alt="Loading"
+             data-id="spinner-image">
+    </div>
+
 </main>
 
-<div id="pokemonDialog" class="pokemonDialog">
-    <div class="dialogContent" id="dialogContent"></div>
+<div id="pokemonDialog"
+     class="pokemonDialog"
+     data-id="dialog">
+
+    <div class="dialogContent"
+         id="dialogContent"
+         data-id="dialog-content">
+    </div>
+
 </div>
 
-<footer>
+<footer data-id="footer">
 
     <div class="footer_container">
-  
+
         <p>
-        <button class="loadMoreBtn">More</button>  
-        <button class="toggleDarkModeButton" onclick="toggleDarkMode()">Color</button>
-        <button class="toggleDarkModeButton" onclick="goHome()">Home</button>       
+
+            <button class="loadMoreBtn"
+                    data-id="load-more-button">
+                More
+            </button>
+
+            <button class="toggleDarkModeButton"
+                    onclick="toggleDarkMode()"
+                    data-id="theme-toggle">
+                Color
+            </button>
+
+            <button class="toggleDarkModeButton"
+                    onclick="goHome()"
+                    data-id="home-button-footer">
+                Home
+            </button>
 
         </p>
-
 
     </div>
 
 </footer>
 
 </body>
-
 </html>
