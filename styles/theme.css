@@ -41,11 +41,11 @@
     background: #444;
 }
 
-
 .darkMode {
     background-color: #1a1a1a;
     color: white;
 }
+
 .darkMode .cardContent {
     background-color: rgb(45 43 44 / 52%);
 }
@@ -55,12 +55,10 @@
     color: #e6e6e6;
 }
 
-
 .darkMode .pokemon_header {
     background: linear-gradient(135deg, #2a2d36, #1b1d23);
     color: #f2f2f2;
 }
-
 
 .darkMode .dialog_menu button {
     background: linear-gradient(135deg, #2b2f3a, #1c1f27);
@@ -68,20 +66,17 @@
     border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-
 .darkMode .info_row {
     background: #242732;
     color: #dcdcdc;
     border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-
 .darkMode .evoCard {
     background: linear-gradient(135deg, #262a35, #1b1e26);
     color: #eaeaea;
     border: 1px solid rgba(255, 255, 255, 0.08);
 }
-
 
 .darkMode .info_row:hover,
 .darkMode .evoCard:hover {

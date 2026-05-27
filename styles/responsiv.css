@@ -50,4 +50,9 @@
     gap: 5px;
     padding: 0;
 }
+.pokemon_image img {
+    width: 210px;
+    max-width: 100%;
+    padding-top: 48px;
+}
 }

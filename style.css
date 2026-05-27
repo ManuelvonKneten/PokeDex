@@ -137,7 +137,6 @@ main {
     color: #555;
 }
 
-
 .card_container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(283px, max-content));
@@ -147,8 +146,7 @@ main {
 }
 
 .pokemon_card {
-    /* background: white; */
-    /* border-radius: 30px; */
+    border-radius: 24px;
     overflow: hidden;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
     transition: 0.2s;
@@ -162,7 +160,6 @@ main {
     width: 100%;
     height: 340px;
     object-fit: contain;
-    /* background: #f8f8f8; */
     padding: 16px;
 }
 
@@ -245,7 +242,6 @@ footer {
 .pokemon_image {
     display: flex;
     justify-content: center;
-    /* padding-top: 20px; */
 }
 
 
@@ -485,4 +481,3 @@ footer {
     font-weight: bold;
     color: #999;
 }
-
