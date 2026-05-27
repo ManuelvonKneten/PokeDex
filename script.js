@@ -17,7 +17,7 @@ const pokemonRequestCache = new Map();
 
 let pokemonCache = [];
 let offset = 0;
-const limit = 40;
+const limit = 20;
 let isLoading = false;
 
 const basePath = "./icons/types/";
@@ -123,16 +123,28 @@ function isValidSearch(search) {
 async function searchPokemon() {
     const value = pokemonSearch.value;
     if (typeof value !== "string") return;
+
     const search = normalizeInput(value);
-    if (!isValidSearch(search)) return renderCards(pokemonCache);
+
+    if (!isValidSearch(search)) {
+        activePokemonList = pokemonCache;
+        renderCards(pokemonCache);
+        return;
+    }
+
     let results = filterCache(search);
+
     try {
         if (!results.length) {
             const pokemon = await getPokemonFromApi(search);
             if (!existsInCache(pokemon.id)) pokemonCache.push(pokemon);
             results = [pokemon];
         }
+
+        activePokemonList = results;
+        activeIndex = 0;
         renderCards(results);
+
     } catch {
         cardContainer.innerHTML = "<p>No Pokémon found.</p>";
     }
@@ -148,32 +160,35 @@ document.querySelectorAll(".loadMoreBtn")
     });
 
 function renderCards(pokemons) {
+    activePokemonList = pokemons;
+
     let html = "";
 
     for (let i = 0; i < pokemons.length; i++) {
-        const p = pokemons[i];
-        const primaryType = p.types[0].type.name;
-        const typeClasses = p.types.map(t => t.type.name).join(" ");
-        const typesHtml = createTypeIconsHTML(p.types);
-        html += createPokemonCardHTML(p);
+        html += createPokemonCardHTML(pokemons[i], i);
     }
+
     cardContainer.innerHTML = html;
 }
 
+const evoCache = new Map();
+
 async function getEvoChain(id) {
-    const species = await fetchJson(`https://pokeapi.co/api/v2/pokemon-species/${id}`);
-    const evoData = await fetchJson(species.evolution_chain.url);
+    const { evolution_chain } = await fetchJson(
+        `https://pokeapi.co/api/v2/pokemon-species/${id}`
+    );
+    if (evoCache.has(evolution_chain.url)) {
+        return evoCache.get(evolution_chain.url);
+    }
+    const { chain: evoChain } = await fetchJson(evolution_chain.url);
     const chain = [];
-    let node = evoData.chain;
-    while (node) {
-        const urlParts = node.species.url.split("/").filter(Boolean);
-        const pokeId = Number(urlParts[urlParts.length - 1]);
+    for (let node = evoChain; node; node = node.evolves_to[0]) {
         chain.push({
-            id: pokeId,
+            id: Number(node.species.url.split("/").filter(Boolean).at(-1)),
             name: node.species.name
         });
-        node = node.evolves_to[0];
     }
+    evoCache.set(evolution_chain.url, chain);
     return chain;
 }
 
@@ -186,12 +201,6 @@ async function preloadMissingPokemon(ids) {
             pokemonCache.push(data);
         } catch (e) {}
     }
-}
-
-function openDialogById(id) {
-    const pokemon = pokemonCache.find(p => p.id === Number(id));
-    if (!pokemon) return;
-    openDialog(pokemon.id);
 }
 
 function openDialog(id) {
@@ -210,8 +219,31 @@ function openDialog(id) {
 }
 
 function navigatePokemon(newIndex) {
-    if (newIndex < 0 || newIndex >= pokemonCache.length) return;
-    openDialog(newIndex);
+    if (!pokemonCache.length) return;
+
+    if (newIndex < 0) newIndex = pokemonCache.length - 1;
+    if (newIndex >= pokemonCache.length) newIndex = 0;
+
+    const pokemon = pokemonCache[newIndex];
+    if (!pokemon) return;
+
+    openDialogByIndex(newIndex);
+}
+
+function openDialogByIndex(index) {
+    const p = activePokemonList[index];
+    if (!p) return;
+
+    activeIndex = index;
+
+    dialogContent.innerHTML = createPokemonDialogHTML(
+        p,
+        index,
+        activePokemonList.length
+    );
+
+    dialog.classList.add("open");
+    document.body.style.overflow = "hidden";
 }
 
 dialog.addEventListener("click", (e) => {
@@ -271,7 +303,17 @@ function formatName(name) {
 }
 
 function handleEvoClick(id) {
-    openDialogById(id);
+    const index = activePokemonList.findIndex(p => p.id === id);
+
+    if (index === -1) {
+        const fallbackIndex = pokemonCache.findIndex(p => p.id === id);
+        if (fallbackIndex === -1) return;
+
+        openDialogByIndex(fallbackIndex);
+        return;
+    }
+
+    openDialogByIndex(index);
 }
 
 function toggleDarkMode() {
@@ -305,14 +347,26 @@ async function loadEvoTab(id) {
     }
 }
 
-function createPokemonCardHTML(p) {
+function createPokemonCardHTML(p, index) {
     const typeNames = p.types.map(t => t.type.name);
-    return getPokemonCardTemplate(
-        p,
-        p.stats.find(s => s.stat.name === "hp").base_stat,
-        p.stats.find(s => s.stat.name === "attack").base_stat,
-        typeNames[0],
-        typeNames.slice(1).join(" "),
-        createTypeIconsHTML(p.types)
-    );
+
+    return `
+        <div class="pokemon_card" onclick="openDialogByIndex(${index})">
+            ${getPokemonCardTemplate(
+                p,
+                p.stats.find(s => s.stat.name === "hp").base_stat,
+                p.stats.find(s => s.stat.name === "attack").base_stat,
+                typeNames[0],
+                typeNames.slice(1).join(" "),
+                createTypeIconsHTML(p.types)
+            )}
+        </div>
+    `;
+}
+
+function goHome() {
+    pokemonSearch.value = "";
+    activePokemonList = pokemonCache;
+    renderCards(pokemonCache);
+    window.scrollTo({ top: 0, behavior: "smooth" });
 }

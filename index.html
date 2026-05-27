@@ -22,13 +22,15 @@
 <div class="headerContainer">
               <img src="./icons/misc/pokemon.png" class="pokemonBanner" alt="pokemon">
 
-        <div class="search_container">
-            <input type="text" id="pokemonSearch" placeholder="Search Pokémon...">
+<div class="search_container">
+    <button type="button" class="homeButton" onclick="goHome()" aria-label="Home"></button>
 
-            <button type="button" class="searchBtn" onclick="searchPokemon()"></button>
+    <input type="text" id="pokemonSearch" placeholder="Search Pokémon...">
 
-            <div id="toastContainer"></div>
-        </div>
+    <button type="button" class="searchBtn" onclick="searchPokemon()" aria-label="Search"></button>
+
+    <div id="toastContainer"></div>
+</div>
 
 </header>
 
@@ -58,7 +60,9 @@
   
         <p>
         <button class="loadMoreBtn">More</button>  
-        <button class="toggleDarkModeButton" onclick="toggleDarkMode()">Color</button>       
+        <button class="toggleDarkModeButton" onclick="toggleDarkMode()">Color</button>
+        <button class="toggleDarkModeButton" onclick="goHome()">Home</button>       
+
         </p>
 
 

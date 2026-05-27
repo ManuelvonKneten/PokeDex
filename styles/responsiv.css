@@ -12,4 +12,42 @@
     .hero_section h1 {
         font-size: 36px;
     }
+    .evoImage {
+    width: 60px;
+    height: 60px;
+}
+    .info_label {
+    font-weight: 700;
+    font-size: 14px;
+}
+.info_row {
+    padding: 8px 16px !important;
+    margin: 3px !important;
+}
+.dialog_menu button {
+    font-size: 14px !important;
+
+}
+.pokemon_header h2 {
+    font-size: 16px !important;
+}
+.dialogContent {
+    height: 791px !important;
+
+}
+.pokemon_dialog {
+    gap: 17px !important;
+}
+#pokemonSearch {
+    width: 140px;
+
+}
+.homeButton, .searchBtn {
+    width: 28px;
+    height: 28px;
+}
+.evoLine {
+    gap: 5px;
+    padding: 0;
+}
 }

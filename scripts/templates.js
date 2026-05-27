@@ -113,7 +113,7 @@ function createPokemonDialogHTML(p, index, total) {
                         ${index === 0 ? "disabled" : ""}
                         aria-label="Previous Pokémon"
                     >
-                        Prev
+                        <
                     </button>
 
                     <button
@@ -121,7 +121,7 @@ function createPokemonDialogHTML(p, index, total) {
                         ${index === total - 1 ? "disabled" : ""}
                         aria-label="Next Pokémon"
                     >
-                        Next
+                        >
                     </button>
 
                     <button
