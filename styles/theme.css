@@ -1,0 +1,91 @@
+.themeToggle {
+    width: 52px;
+    height: 52px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(145deg, #f1f1f1, #d6d6d6);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.15),
+                -4px -4px 10px rgba(255, 255, 255, 0.6);
+    transition: all 0.25s ease;
+}
+
+.themeToggle .bulb {
+    width: 18px;
+    height: 22px;
+    background: #f7d774;
+    border-radius: 50% 50% 40% 40%;
+    position: relative;
+}
+
+.themeToggle .bulb::after {
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 6px;
+    background: #c9a84a;
+    border-radius: 2px;
+}
+
+.darkMode .themeToggle {
+    background: linear-gradient(145deg, #2b2b2b, #1f1f1f);
+}
+
+.darkMode .themeToggle .bulb {
+    background: #444;
+}
+
+
+.darkMode {
+    background-color: #1a1a1a;
+    color: white;
+}
+.darkMode .cardContent {
+    background-color: rgb(45 43 44 / 52%);
+}
+
+.darkMode .dialogContent {
+    background-color: #1e1f24;
+    color: #e6e6e6;
+}
+
+
+.darkMode .pokemon_header {
+    background: linear-gradient(135deg, #2a2d36, #1b1d23);
+    color: #f2f2f2;
+}
+
+
+.darkMode .dialog_menu button {
+    background: linear-gradient(135deg, #2b2f3a, #1c1f27);
+    color: #e6e6e6;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+
+.darkMode .info_row {
+    background: #242732;
+    color: #dcdcdc;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+
+.darkMode .evoCard {
+    background: linear-gradient(135deg, #262a35, #1b1e26);
+    color: #eaeaea;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+
+.darkMode .info_row:hover,
+.darkMode .evoCard:hover {
+    transform: translateY(-2px);
+    transition: 0.2s ease;
+    border-color: rgba(255, 255, 255, 0.15);
+}

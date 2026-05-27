@@ -28,6 +28,35 @@
     box-shadow: none;
 }
 
+.toggleDarkModeButton {
+    padding: 4px 13px;
+    font-size: 16px;
+    font-weight: 600;
+    background: linear-gradient(90deg, #ffcb05, #2a75bb);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.toggleDarkModeButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.25);
+}
+
+.toggleDarkModeButton:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.toggleDarkModeButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
 
 .pokemon_header {
     display: flex;
@@ -96,55 +125,6 @@
     padding-bottom: 24px;
 }
 
-.darkMode {
-    background-color: #1a1a1a;
-    color: white;
-}
-.darkMode .cardContent {
-    background-color: rgb(44, 44, 45);
-}
-
-
-.darkMode .dialogContent {
-    background-color: #1e1f24;
-    color: #e6e6e6;
-}
-
-
-.darkMode .pokemon_header {
-    background: linear-gradient(135deg, #2a2d36, #1b1d23);
-    color: #f2f2f2;
-}
-
-
-.darkMode .dialog_menu button {
-    background: linear-gradient(135deg, #2b2f3a, #1c1f27);
-    color: #e6e6e6;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-
-.darkMode .info_row {
-    background: #242732;
-    color: #dcdcdc;
-    border: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-
-.darkMode .evoCard {
-    background: linear-gradient(135deg, #262a35, #1b1e26);
-    color: #eaeaea;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-
-.darkMode .info_row:hover,
-.darkMode .evoCard:hover {
-    transform: translateY(-2px);
-    transition: 0.2s ease;
-    border-color: rgba(255, 255, 255, 0.15);
-}
-
 .searchBtn {
     width: 32px;
     height: 32px;
@@ -178,4 +158,38 @@
     mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M10 2a8 8 0 105.293 14.293l4.707 4.707 1.414-1.414-4.707-4.707A8 8 0 0010 2z'/%3E%3C/svg%3E") no-repeat center;
     -webkit-mask-size: contain;
     mask-size: contain;
+}
+
+.search_container {
+    position: relative;
+}
+
+#toastContainer {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 6px;
+    z-index: 10;
+    width: auto;
+}
+
+.toast {
+    background: #222;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    opacity: 0;
+    transform: translateY(-5px);
+    transition: all 0.2s ease;
+}
+
+.toast_show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toast_error {
+    background: #d9534f;
 }

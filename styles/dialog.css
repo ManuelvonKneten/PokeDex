@@ -1,0 +1,42 @@
+.dialogContent {
+    width: 420px;
+    max-width: 90%;
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    animation: fadeIn 0.2s ease;
+    height: 760px;
+    max-width: 80vh;
+}
+
+.dialog_menu {
+    display: flex;
+    gap: 8px;
+    margin: 16px 0;
+}
+
+.dialog_menu button {
+    flex: 1;
+    height: 32px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.dialog_nav {
+    position: relative;
+    z-index: 3;
+}
+
+.pokemon_dialog {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}

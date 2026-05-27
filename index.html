@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="./styles/colors.css">
     <link rel="stylesheet" href="./styles/assets.css">
     <link rel="stylesheet" href="./styles/responsiv.css">
+    <link rel="stylesheet" href="./styles/dialog.css">
+    <link rel="stylesheet" href="./styles/theme.css">
     <link rel="icon" type="image/png" sizes="32x32" href="./icons/misc/pokeball.png">
     <script src="./script.js" defer></script>
     <script src="./scripts/templates.js" defer></script>
@@ -20,10 +22,13 @@
 <div class="headerContainer">
               <img src="./icons/misc/pokemon.png" class="pokemonBanner" alt="pokemon">
 
-            <div class="search_container">
-                <input type="text" id="pokemonSearch" placeholder="Search Pokémon...">
-                 <button type="button" class="searchBtn" onclick="searchPokemon()"></button>
-            </div>
+        <div class="search_container">
+            <input type="text" id="pokemonSearch" placeholder="Search Pokémon...">
+
+            <button type="button" class="searchBtn" onclick="searchPokemon()"></button>
+
+            <div id="toastContainer"></div>
+        </div>
 
 </header>
 
@@ -53,7 +58,7 @@
   
         <p>
         <button class="loadMoreBtn">More</button>  
-        <button class="loadMoreBtn" onclick="toggleDarkMode()">Color</button>       
+        <button class="toggleDarkModeButton" onclick="toggleDarkMode()">Color</button>       
         </p>
 
 

@@ -22,7 +22,6 @@ header {
         #ffffff 55%,
         #3b4cca 100% 
     );
-
     border-bottom: 3px solid #ffcb05;
 }
 
@@ -61,7 +60,6 @@ header {
 .headerContainer {
     flex-wrap: wrap;
 }
-
 
 .navLinks {
     gap: 16px;
@@ -145,8 +143,8 @@ main {
     grid-template-columns: repeat(auto-fit, minmax(283px, max-content));
     gap: 28px;
     justify-content: center;
-}
 
+}
 
 .pokemon_card {
     background: white;
@@ -232,12 +230,6 @@ footer {
     text-align: center;
 }
 
-.pokemon_dialog {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-}
-
 .pokemon_header {
     text-align: center;
 }
@@ -302,6 +294,7 @@ footer {
     object-fit: contain;
     display: block;
     margin-top: 15px;
+    cursor: pointer;
 }
 
 .cardImage .pokemonHp {
@@ -346,7 +339,7 @@ footer {
 
 .cardContent {
     padding: 20px;
-    background-color: rgb(230, 230, 230);
+    background-color: rgb(215 190 190);
     border-radius: 0px 0px 24px 24px;
 }
 
@@ -362,37 +355,6 @@ footer {
 
 .pokemonDialog.open {
     display: flex;
-}
-
-.dialogContent {
-    width: 420px;
-    max-width: 90%;
-    background: #fff;
-    border-radius: 12px;
-    padding: 20px;
-    animation: fadeIn 0.2s ease;
-    height: 760px;
-    max-width: 80vh;
-}
-.dialog_menu {
-    display: flex;
-    gap: 8px;
-    margin: 16px 0;
-}
-
-.dialog_menu button {
-    flex: 1;
-    height: 32px;
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 600;
-    text-align: center;
 }
 
 .tab_content {
@@ -471,12 +433,6 @@ footer {
     z-index: 2;
 }
 
-.dialog_nav {
-    position: relative;
-    z-index: 3;
-}
-
-
 .hidden {
     display: none;
 }
@@ -523,48 +479,5 @@ footer {
     font-size: 20px;
     font-weight: bold;
     color: #999;
-}
-
-.themeToggle {
-    width: 52px;
-    height: 52px;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(145deg, #f1f1f1, #d6d6d6);
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.15),
-                -4px -4px 10px rgba(255, 255, 255, 0.6);
-    transition: all 0.25s ease;
-}
-
-.themeToggle .bulb {
-    width: 18px;
-    height: 22px;
-    background: #f7d774;
-    border-radius: 50% 50% 40% 40%;
-    position: relative;
-}
-
-.themeToggle .bulb::after {
-    content: "";
-    position: absolute;
-    bottom: -6px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 10px;
-    height: 6px;
-    background: #c9a84a;
-    border-radius: 2px;
-}
-
-.darkMode .themeToggle {
-    background: linear-gradient(145deg, #2b2b2b, #1f1f1f);
-}
-
-.darkMode .themeToggle .bulb {
-    background: #444;
 }
 

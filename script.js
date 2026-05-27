@@ -16,9 +16,8 @@ const toggleButton = document.getElementById("darkModeButton");
 const pokemonRequestCache = new Map();
 
 let pokemonCache = [];
-
 let offset = 0;
-const limit = 25;
+const limit = 40;
 let isLoading = false;
 
 const basePath = "./icons/types/";
@@ -63,7 +62,6 @@ async function fetchSimplifiedPokemons(urls) {
     return data.map(simplifyPokemon);
 }
 
-
 const updateCache = (append, cache, data) => {
     if (!append) return data;
     return cache.concat(data);
@@ -95,9 +93,31 @@ async function getPokemonFromApi(search) {
     return buildSimplifiedPokemon(pokemonData);
 }
 
+function showToast(message, type = "error") {
+    const container = document.getElementById("toastContainer");
+    const toast = document.createElement("div");
+    toast.className = `toast toast_${type}`;
+    toast.textContent = message;
+    container.appendChild(toast);
+    setTimeout(() => {
+        toast.classList.add("toast_show");
+    }, 10);
+    setTimeout(() => {
+        toast.classList.remove("toast_show");
+        toast.addEventListener("transitionend", () => toast.remove());
+    }, 2000);
+}
+
 function isValidSearch(search) {
-    const onlyLetters = /^[a-zäöüß]+$/i.test(search);
-    return search && search.length >= 3 && onlyLetters;
+    if (!search || search.length < 3) {
+        showToast("Please enter at least 3 characters.", "error");
+        return false;
+    }
+    if (!/^[a-zäöüß]+$/i.test(search)) {
+        showToast("Only letters are allowed.", "error");
+        return false;
+    }
+    return true;
 }
 
 async function searchPokemon() {
@@ -135,7 +155,7 @@ function renderCards(pokemons) {
         const primaryType = p.types[0].type.name;
         const typeClasses = p.types.map(t => t.type.name).join(" ");
         const typesHtml = createTypeIconsHTML(p.types);
-        html += createPokemonCardHTML(p, i, primaryType, typeClasses, typesHtml);
+        html += createPokemonCardHTML(p);
     }
     cardContainer.innerHTML = html;
 }
@@ -274,10 +294,8 @@ function closePokemonDialog() {
 
 async function loadEvoTab(id) {
     showTab('evolution');
-
     const container = document.getElementById("tab_evolution");
     container.innerHTML = getLoadingSpinnerTemplate();
-
     try {
         const evoHtml = await renderEvoChain(id);
         container.innerHTML = evoHtml;
@@ -287,17 +305,14 @@ async function loadEvoTab(id) {
     }
 }
 
-function createPokemonCardHTML(p, i, primaryType, typeClasses, typesHtml) {
-    const hp = p.stats.find(s => s.stat.name === "hp").base_stat;
-    const attack = p.stats.find(s => s.stat.name === "attack").base_stat;
-    const defense = p.stats.find(s => s.stat.name === "defense").base_stat;
-
+function createPokemonCardHTML(p) {
+    const typeNames = p.types.map(t => t.type.name);
     return getPokemonCardTemplate(
         p,
-        hp,
-        attack,
-        primaryType,
-        typeClasses,
-        typesHtml
+        p.stats.find(s => s.stat.name === "hp").base_stat,
+        p.stats.find(s => s.stat.name === "attack").base_stat,
+        typeNames[0],
+        typeNames.slice(1).join(" "),
+        createTypeIconsHTML(p.types)
     );
 }
