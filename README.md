@@ -23,4 +23,5 @@ It uses the PokéAPI to load and display Pokémon data.
 - JavaScript
 - PokéAPI (https://pokeapi.co/)
 
+
 ---
